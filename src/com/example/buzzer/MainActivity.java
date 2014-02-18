@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import android.widget.Button;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -13,6 +14,8 @@ import android.view.View;
 public class MainActivity extends Activity {
 
 	private Button forward, left, back, right; 
+	private boolean isWriting = false;
+	private static final String TAG = "SerialReader";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -26,14 +29,19 @@ public class MainActivity extends Activity {
         back = (Button)findViewById(R.id.back);
         right = (Button)findViewById(R.id.right);
         
+        
         forward.setOnTouchListener(new View.OnTouchListener() {
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				if (event.getAction()==MotionEvent.ACTION_DOWN){
+				if (event.getAction()==MotionEvent.ACTION_DOWN && !isWriting){
 					Serial.WriteSerial("LED1ON");
-				}else{
+					isWriting = true;
+					Log.d(TAG, "LED 1 on");
+				}else if (isWriting && event.getAction()==MotionEvent.ACTION_UP){
 					Serial.WriteSerial("LED1OFF");
+					isWriting = false;
+					Log.d(TAG, "LED 1 off");
 				}
 	                
 	            return true;
@@ -42,12 +50,16 @@ public class MainActivity extends Activity {
         
         right.setOnTouchListener(new View.OnTouchListener() {
 			
-			@Override
+        	@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				if (event.getAction()==MotionEvent.ACTION_DOWN){
+				if (event.getAction()==MotionEvent.ACTION_DOWN && !isWriting){
 					Serial.WriteSerial("LED2ON");
-				}else{
+					isWriting = true;
+					Log.d(TAG, "LED 2 on");
+				}else if (isWriting && event.getAction()==MotionEvent.ACTION_UP){
 					Serial.WriteSerial("LED2OFF");
+					isWriting = false;
+					Log.d(TAG, "LED 2 off");
 				}
 	                
 	            return true;
@@ -56,12 +68,16 @@ public class MainActivity extends Activity {
         
         back.setOnTouchListener(new View.OnTouchListener() {
 			
-			@Override
+        	@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				if (event.getAction()==MotionEvent.ACTION_DOWN){
+				if (event.getAction()==MotionEvent.ACTION_DOWN && !isWriting){
 					Serial.WriteSerial("LED3ON");
-				}else{
+					isWriting = true;
+					Log.d(TAG, "LED 3 on");
+				}else if (isWriting && event.getAction()==MotionEvent.ACTION_UP){
 					Serial.WriteSerial("LED3OFF");
+					isWriting = false;
+					Log.d(TAG, "LED 3 off");
 				}
 	                
 	            return true;
@@ -70,12 +86,16 @@ public class MainActivity extends Activity {
         
         left.setOnTouchListener(new View.OnTouchListener() {
 			
-			@Override
+        	@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				if (event.getAction()==MotionEvent.ACTION_DOWN){
+				if (event.getAction()==MotionEvent.ACTION_DOWN && !isWriting){
 					Serial.WriteSerial("LED4ON");
-				}else{
+					isWriting = true;
+					Log.d(TAG, "LED 4 on");
+				}else if (isWriting && event.getAction()==MotionEvent.ACTION_UP){
 					Serial.WriteSerial("LED4OFF");
+					isWriting = false;
+					Log.d(TAG, "LED 4 off");
 				}
 	                
 	            return true;
